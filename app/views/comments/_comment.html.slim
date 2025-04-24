@@ -1,0 +1,5 @@
+div id=dom_id(comment) class="mb-4 p-3 bg-white rounded shadow"
+  p
+    span class="font-semibold"= comment.user.email
+    span class="text-sm text-gray-600 ml-2"= comment.created_at.strftime("%Y-%m-%d %H:%M")
+  p= comment.body

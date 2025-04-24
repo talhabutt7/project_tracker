@@ -1,0 +1,16 @@
+h1 class="text-2xl font-bold mb-6" Projects
+
+= link_to "New Project", new_project_path, class: "bg-blue-500 text-white px-4 py-2 rounded"
+
+- @projects.each do |project|
+  div class="bg-white rounded shadow p-4 mt-4"
+    h2 class="text-xl font-semibold"
+      = link_to project.title, project_path(project), class: "hover:underline"
+    p = project.description
+    p class="text-sm text-gray-600 mt-2"
+      | Status: #{project.status} – Owner: #{project.user.email}
+    - if project.user == current_user
+      div class="mt-2"
+        = link_to "Edit", edit_project_path(project), class: "text-blue-600 hover:underline mr-3"
+        = link_to "Delete", project_path(project), data: { turbo_confirm: "Are you sure?" },
+                method: :delete, class: "text-red-600 hover:underline"

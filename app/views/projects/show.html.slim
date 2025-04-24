@@ -1,0 +1,26 @@
+h1 class="text-3xl font-bold mb-2"= @project.title
+p class="text-gray-700 mb-4"= @project.description
+
+// Project Status display and change form
+div class="mb-6"
+  p class="font-semibold" Current Status: <span class="text-blue-600"><= @project.status></span>
+  = form_with model: @project, url: project_path(@project), method: :patch, data: { turbo_frame: "_top" }, class: "mt-2" do |f|
+    div class="inline-block"
+      = f.label :status, "Change Status:", class: "mr-2"
+      = f.select :status, options_for_select(Project::STATUSES, @project.status), {}, class: "border border-gray-300 rounded px-2 py-1"
+    = f.submit "Update", class: "ml-2 bg-blue-500 text-white px-4 py-1 rounded"
+
+// Timeline events
+h2 class="text-xl font-bold mt-8 mb-4" Timeline
+= turbo_stream_from @project
+div id="project_#{@project.id}_timeline"
+  - @timeline_events.each do |event|
+    - if event.is_a?(ProjectStatusChange)
+      = render "project_status_changes/project_status_change", project_status_change: event
+    - else
+      = render "comments/comment", comment: event
+
+// New Comment form
+h3 class="text-lg font-semibold mt-8" Add a Comment:
+div id="project_comment_form"
+  = render "comments/form", project: @project, comment: @comment

@@ -1,0 +1,9 @@
+= form_with(model: [project, comment], local: false) do |f|
+  - if comment.errors.any?
+    div class="bg-red-100 text-red-800 p-2 mb-2"
+      - comment.errors.full_messages.each do |msg|
+        p= msg
+
+  = f.label :body, "Comment", class: "block font-medium text-gray-700"
+  = f.text_area :body, rows: 3, placeholder: "Write a comment...", class: "border border-gray-300 rounded w-full p-2"
+  = f.submit "Post Comment", class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded"

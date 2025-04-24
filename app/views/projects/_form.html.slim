@@ -1,0 +1,22 @@
+= form_with(model: project, local: true) do |f|
+  - if project.errors.any?
+    div class="bg-red-100 text-red-800 p-2 mb-4"
+      p class="font-semibold"= pluralize(project.errors.count, "error") + " prevented saving this project:"
+      ul
+        - project.errors.full_messages.each do |msg|
+          li= msg
+
+  div class="mb-4"
+    = f.label :title, class: "block font-medium text-gray-700"
+    = f.text_field :title, class: "border border-gray-300 rounded w-full p-2"
+
+  div class="mb-4"
+    = f.label :description, class: "block font-medium text-gray-700"
+    = f.text_area :description, rows: 5, class: "border border-gray-300 rounded w-full p-2"
+
+  div class="mb-4"
+    = f.label :status, class: "block font-medium text-gray-700"
+    = f.select :status, options_for_select(Project::STATUSES, project.status), {}, class: "border border-gray-300 rounded w-full p-2"
+
+  = f.submit nil, class: "bg-blue-500 text-white px-4 py-2 rounded"
+  = link_to "Cancel", (project.new_record? ? projects_path : project_path(project)), class: "ml-4 text-gray-600"
