@@ -1,16 +1,22 @@
 h1 class="text-2xl font-bold mb-6" Projects
 
+ul.flex.gap-6.mb-4
+  li = link_to "My Projects", "#", class: "text-blue-600 font-semibold"
+  li = link_to "All Projects", "#", class: "text-gray-500 hover:text-blue-600"
+
 = link_to "New Project", new_project_path, class: "bg-blue-500 text-white px-4 py-2 rounded"
 
-- @projects.each do |project|
+- @my_projects.each do |project|
   div class="bg-white rounded shadow p-4 mt-4"
     h2 class="text-xl font-semibold"
       = link_to project.title, project_path(project), class: "hover:underline"
     p = project.description
     p class="text-sm text-gray-600 mt-2"
-      | Status: #{project.status} – Owner: #{project.user.email}
+      | Status: #{project.status} – Owner: #{project.user.full_name}
+    p class="text-sm text-gray-500 mt-1"
+      | Assignees:
+      = project.assignees.map(&:full_name).join(", ")
     - if project.user == current_user
       div class="mt-2"
         = link_to "Edit", edit_project_path(project), class: "text-blue-600 hover:underline mr-3"
-        = link_to "Delete", project_path(project), data: { turbo_confirm: "Are you sure?" },
-                method: :delete, class: "text-red-600 hover:underline"
+        = link_to "Delete", project_path(project), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-red-600 hover:underline"

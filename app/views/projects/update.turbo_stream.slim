@@ -1,9 +1,9 @@
 -# Only update elements if status changed
 - if @project.previous_changes.key?("status")
-  # Update the status text on the page
+  / # Update the status text on the page
   = turbo_stream.replace @project, target: "project_status" do
     span id="project_status" class="text-blue-600"><= @project.status>
-  # Append status change event to timeline
+  / # Append status change event to timeline
   - latest_change = @project.project_status_changes.order(created_at: :desc).first
   = turbo_stream.append "project_#{@project.id}_timeline" do
     = render partial: "project_status_changes/project_status_change", locals: { project_status_change: latest_change }

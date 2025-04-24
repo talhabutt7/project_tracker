@@ -12,8 +12,8 @@ div.max-w-4xl.mx-auto.bg-white.border.border-gray-300.rounded-xl.shadow-md.p-6.m
   div.bg-gray-50.border.border-gray-200.rounded-lg.p-4
     p.font-semibold.text-gray-800.mb-2
       = fa_icon "info-circle", class: "text-blue-400 mr-2"
-      | Current Status:
-      span.text-blue-600.font-medium= " #{@project.status}"
+      span.mr-2 Current Status:
+      span.inline-flex.items-center.bg-red-600.text-white.px-3.py-1.rounded-full.text-sm.font-medium.mr-2.mb-2= " #{@project.status}"
 
     = form_with model: @project, url: project_path(@project), method: :patch, data: { turbo_frame: "_top" }, class: "flex items-center gap-2 mt-2" do |f|
       = f.label :status, "Change:", class: "text-sm text-gray-600"
@@ -29,7 +29,7 @@ div.max-w-4xl.mx-auto.bg-white.border.border-gray-300.rounded-xl.shadow-md.p-6.m
 
   div.space-y-4
     - @timeline_events.each do |event|
-      div.bg-gray-100.rounded-lg.p-4.shadow-sm
+      div.bg-gray-100.rounded-lg.px-4.shadow-sm
         - if event.is_a?(ProjectStatusChange)
           = render "project_status_changes/project_status_change", project_status_change: event
         - else
@@ -41,4 +41,4 @@ div.max-w-4xl.mx-auto.bg-white.border.border-gray-300.rounded-xl.shadow-md.p-6.m
     | Add a Comment
 
   div#project_comment_form
-    = render "comments/form", project: @project, comment: @comment
+    = render "comments/form", project: @project, comment: @comment, current_user: current_user
