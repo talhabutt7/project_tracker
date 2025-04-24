@@ -1,0 +1,19 @@
+= turbo_frame_tag "project_status_#{project.id}" do
+  div.bg-gray-50.border.border-gray-200.rounded-lg.p-4
+    p.font-semibold.text-gray-800.mb-2
+      = fa_icon "info-circle", class: "text-blue-400 mr-2"
+      span.mr-2 Current Status:
+
+      - status_class = case project.status
+      - when "Completed" then "bg-green-600"
+      - when "In Progress" then "bg-yellow-500"
+      - when "Reopened" then "bg-red-600"
+      - else "bg-blue-500"
+
+      span.inline-flex.items-center class="#{status_class} text-white px-3 py-1 rounded-full text-sm font-medium mr-2 mb-2"
+        = project.status
+
+    = form_with model: project, url: project_path(project), method: :patch do |f|
+      = f.label :status, "Change:", class: "text-sm text-gray-600"
+      = f.select :status, options_for_select(Project::STATUSES, project.status), {}, class: "border border-gray-300 rounded px-3 py-1"
+      = f.submit "Update", class: "bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition"

@@ -2,18 +2,15 @@ class CommentsController < ApplicationController
   before_action :set_project
 
   def create
-    @comment = @project.comments.new(comment_params)
-    @comment.user = current_user
+    @project = Project.find(params[:project_id])
+    @comment = @project.comments.new(comment_params.merge(user: current_user))
+
     if @comment.save
       respond_to do |format|
-        format.turbo_stream   # see app/views/comments/create.turbo_stream.slim
-        format.html { redirect_to @project, notice: "Comment added." }
+        format.html { redirect_to @project }
       end
     else
-      respond_to do |format|
-        format.turbo_stream   # handle validation errors via Turbo Stream
-        format.html { redirect_to @project, alert: "Failed to add comment." }
-      end
+      render partial: "comments/form", locals: { project: @project, comment: @comment }, status: :unprocessable_entity
     end
   end
 

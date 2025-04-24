@@ -48,28 +48,16 @@ class ProjectsController < ApplicationController
           )
         end
 
-        format.html do
-          redirect_to @project, notice: "Project was successfully updated."
-        end
+        format.html { redirect_to @project, notice: "Project was successfully updated." }
 
-        format.turbo_stream do
-          flash.now[:notice] = "Project status updated."  # For Turbo Flash, optional
-        end
+        format.turbo_stream
       else
-        format.html do
-          render :edit, status: :unprocessable_entity
-        end
-
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "project_form",
-            partial: "projects/form",
-            locals: { project: @project }
-          )
-        end
+        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream
       end
     end
   end
+
 
   def destroy
     @project.destroy

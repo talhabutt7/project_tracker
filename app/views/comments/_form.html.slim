@@ -1,4 +1,4 @@
-= form_with(model: [project, comment], local: true) do |f|
+= form_with(model: [project, comment]) do |f|
   div.mb-4
     = f.label :body, "Comment", class: "block text-sm font-medium text-gray-700"
     = f.text_area :body, rows: 3, placeholder: "Write a comment...", class: "w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

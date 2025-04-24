@@ -1,7 +1,5 @@
-/ # Replace the comment form with a fresh, empty form
 = turbo_stream.replace "project_comment_form" do
   = render partial: "comments/form", locals: { project: @project, comment: Comment.new }
 
-/ # Append the new comment to the timeline
 = turbo_stream.append "project_#{@project.id}_timeline" do
-  = render partial: "comments/comment", locals: { comment: @comment }
+  = render partial: "comments/comment", locals: { comment: @comment, current_user: current_user }
