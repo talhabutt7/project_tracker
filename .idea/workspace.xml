@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5c5301d9-c575-40b6-88c9-3af8a0e23d75" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/tailwind/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/tailwind/application.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/comments/_comment.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/comments/_comment.html.slim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/comments/_form.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/comments/_form.html.slim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.slim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/projects/show.html.slim" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/show.html.slim" afterDir="false" />
     </list>

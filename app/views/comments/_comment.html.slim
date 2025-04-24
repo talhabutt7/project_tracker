@@ -1,19 +1,12 @@
-= turbo_frame_tag dom_id(comment) do
-  - if current_user == comment.user && defined?(editing_comment) && editing_comment == comment
-    = render "comments/edit_form", project: comment.project, comment: comment
-  - else
-    div.mb-4.p-3.rounded.shadow
-      div
-        span.font-semibold.mr-3= comment.user.email
-        span.text-sm.text-gray-600.mr-3= time_ago(comment)
-        - if comment.updated_at != comment.created_at
-          span.text-sm.italic
-            | (edited)
-      div.rounded-xl.p-3.shadow-md
-        p.text-sm.px-4.py-2.rounded-lg.shadow.bg-gray_custom= comment.body
+div.bg-white.border.border-gray-200.rounded-lg.p-4.shadow-sm.space-y-2
+  p.text-sm.text-gray-600
+    strong= comment.user.email
+    |  ·
+    span.text-xs.text-gray-400= time_ago_in_words(comment.created_at) + " ago"
 
+  p.text-gray-800.text-sm.bg-gray-100.px-3.py-2.rounded.whitespace-pre-wrap= comment.body
 
-      - if current_user == comment.user
-        div
-          = link_to "✏️", edit_project_comment_path(comment.project, comment), data: { turbo_frame: dom_id(comment) }, class: "text-sm text-gray-400 hover:text-white"
-          = link_to "🗑️", project_comment_path(comment.project, comment), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-sm text-red-400 hover:text-red-200"
+  - if current_user == comment.user
+    div.flex.justify-end.gap-2
+      = link_to fa_icon("pencil"), edit_project_comment_path(comment.project, comment), class: "text-yellow-500 hover:text-yellow-600 text-sm"
+      = link_to fa_icon("trash"), project_comment_path(comment.project, comment), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500 hover:text-red-600 text-sm"

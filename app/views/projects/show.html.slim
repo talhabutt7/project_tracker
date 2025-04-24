@@ -1,42 +1,44 @@
-div.max-w-3xl.mx-auto.bg-white.border.border-gray-300.rounded-xl.shadow-sm.p-6.mt-6
+div.max-w-4xl.mx-auto.bg-white.border.border-gray-300.rounded-xl.shadow-md.p-6.mt-8.space-y-6.p-2
 
-  h1.text-3xl.font-bold.mb-2
-    = fa_icon "folder-open", class: "text-blue-500 mr-2"
+  / Title + Description
+  h1.text-3xl.font-bold.text-gray-900.flex.items-center.gap-2
+    = fa_icon "folder-open", class: "text-blue-500"
     = @project.title
 
-  p.text-gray-700.mb-4
-    = fa_icon "align-left", class: "text-gray-500 mr-2"
-    = @project.description
 
-  // Project Status display and change form
-  div.mb-6
-    p.font-semibold
-      = fa_icon "info-circle", class: "text-blue-500 mr-2"
+  p.text-gray-700.leading-relaxed= @project.description
+
+  / Project Status
+  div.bg-gray-50.border.border-gray-200.rounded-lg.p-4
+    p.font-semibold.text-gray-800.mb-2
+      = fa_icon "info-circle", class: "text-blue-400 mr-2"
       | Current Status:
-      span.text-blue-600= " #{@project.status}"
+      span.text-blue-600.font-medium= " #{@project.status}"
 
-    = form_with model: @project, url: project_path(@project), method: :patch, data: { turbo_frame: "_top" }, class: "mt-2" do |f|
-      div.inline-block
-        = f.label :status, "Change Status:", class: "mr-2"
-        = f.select :status, options_for_select(Project::STATUSES, @project.status), {}, class: "border border-gray-300 rounded px-2 py-1"
-      = f.submit "Update", class: "ml-2 bg-blue-500 text-white px-4 py-1 rounded"
+    = form_with model: @project, url: project_path(@project), method: :patch, data: { turbo_frame: "_top" }, class: "flex items-center gap-2 mt-2" do |f|
+      = f.label :status, "Change:", class: "text-sm text-gray-600"
+      = f.select :status, options_for_select(Project::STATUSES, @project.status), {}, class: "border border-gray-300 rounded px-3 py-1"
+      = f.submit "Update", class: "bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition"
 
-  h2.text-xl.font-bold.mt-8.mb-4
-    = fa_icon "clock-o", class: "text-gray-600 mr-2"
+  / Timeline Header
+  h2.text-xl.font-bold.text-gray-900.flex.items-center.gap-2.mt-8
+    = fa_icon "clock-o", class: "text-gray-500"
     | Timeline
 
   = turbo_stream_from @project
 
-  div id="project_#{@project.id}_timeline"
+  div.space-y-4
     - @timeline_events.each do |event|
-      - if event.is_a?(ProjectStatusChange)
-        = render "project_status_changes/project_status_change", project_status_change: event
-      - else
-        = render "comments/comment", comment: event
+      div.bg-gray-100.rounded-lg.p-4.shadow-sm
+        - if event.is_a?(ProjectStatusChange)
+          = render "project_status_changes/project_status_change", project_status_change: event
+        - else
+          = render "comments/comment", comment: event
 
-  h3.text-lg.font-semibold.mt-8
-    = fa_icon "comment", class: "text-green-500 mr-2"
-    | Add a Comment:
+  / Add a Comment
+  h3.text-lg.font-semibold.flex.items-center.gap-2.text-gray-900.mt-10
+    = fa_icon "comment", class: "text-green-500"
+    | Add a Comment
 
   div#project_comment_form
     = render "comments/form", project: @project, comment: @comment
