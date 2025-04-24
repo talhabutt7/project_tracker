@@ -71,3 +71,4 @@ end
 
 gem "slim-rails", "~> 3.7"
 gem "devise", "~> 4.9"
+gem 'font-awesome-rails'

@@ -112,6 +112,8 @@ GEM
       warden (~> 1.2.3)
     drb (2.2.1)
     erubi (1.13.1)
+    font-awesome-rails (4.7.0.9)
+      railties (>= 3.2, < 9.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -305,6 +307,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  font-awesome-rails
   importmap-rails
   jbuilder
   pg (~> 1.1)

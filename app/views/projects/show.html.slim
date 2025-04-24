@@ -1,26 +1,42 @@
-h1 class="text-3xl font-bold mb-2"= @project.title
-p class="text-gray-700 mb-4"= @project.description
+div.max-w-3xl.mx-auto.bg-white.border.border-gray-300.rounded-xl.shadow-sm.p-6.mt-6
 
-// Project Status display and change form
-div class="mb-6"
-  p class="font-semibold" Current Status: <span class="text-blue-600"><= @project.status></span>
-  = form_with model: @project, url: project_path(@project), method: :patch, data: { turbo_frame: "_top" }, class: "mt-2" do |f|
-    div class="inline-block"
-      = f.label :status, "Change Status:", class: "mr-2"
-      = f.select :status, options_for_select(Project::STATUSES, @project.status), {}, class: "border border-gray-300 rounded px-2 py-1"
-    = f.submit "Update", class: "ml-2 bg-blue-500 text-white px-4 py-1 rounded"
+  h1.text-3xl.font-bold.mb-2
+    = fa_icon "folder-open", class: "text-blue-500 mr-2"
+    = @project.title
 
-// Timeline events
-h2 class="text-xl font-bold mt-8 mb-4" Timeline
-= turbo_stream_from @project
-div id="project_#{@project.id}_timeline"
-  - @timeline_events.each do |event|
-    - if event.is_a?(ProjectStatusChange)
-      = render "project_status_changes/project_status_change", project_status_change: event
-    - else
-      = render "comments/comment", comment: event
+  p.text-gray-700.mb-4
+    = fa_icon "align-left", class: "text-gray-500 mr-2"
+    = @project.description
 
-// New Comment form
-h3 class="text-lg font-semibold mt-8" Add a Comment:
-div id="project_comment_form"
-  = render "comments/form", project: @project, comment: @comment
+  // Project Status display and change form
+  div.mb-6
+    p.font-semibold
+      = fa_icon "info-circle", class: "text-blue-500 mr-2"
+      | Current Status:
+      span.text-blue-600= " #{@project.status}"
+
+    = form_with model: @project, url: project_path(@project), method: :patch, data: { turbo_frame: "_top" }, class: "mt-2" do |f|
+      div.inline-block
+        = f.label :status, "Change Status:", class: "mr-2"
+        = f.select :status, options_for_select(Project::STATUSES, @project.status), {}, class: "border border-gray-300 rounded px-2 py-1"
+      = f.submit "Update", class: "ml-2 bg-blue-500 text-white px-4 py-1 rounded"
+
+  h2.text-xl.font-bold.mt-8.mb-4
+    = fa_icon "clock-o", class: "text-gray-600 mr-2"
+    | Timeline
+
+  = turbo_stream_from @project
+
+  div id="project_#{@project.id}_timeline"
+    - @timeline_events.each do |event|
+      - if event.is_a?(ProjectStatusChange)
+        = render "project_status_changes/project_status_change", project_status_change: event
+      - else
+        = render "comments/comment", comment: event
+
+  h3.text-lg.font-semibold.mt-8
+    = fa_icon "comment", class: "text-green-500 mr-2"
+    | Add a Comment:
+
+  div#project_comment_form
+    = render "comments/form", project: @project, comment: @comment
