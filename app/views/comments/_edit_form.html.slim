@@ -1,0 +1,7 @@
+= form_with model: [project, comment], url: project_comment_path(project, comment), method: :patch, data: { turbo_frame: dom_id(comment) } do |f|
+  .mb-2
+    = f.text_area :body, rows: 3, class: "w-full border border-gray-600 rounded p-2", placeholder: "Edit your comment…"
+
+  .flex.gap-3.mt-2
+    = f.submit "Update", class: "bg-green-600 text-sm px-4 py-1 rounded hover:bg-green-700"
+    = link_to "Cancel", project_path(project), data: { turbo_frame: "_top" }, class: "text-sm text-gray-400 hover:text-white"

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Projects with nested comments
   resources :projects do
-    resources :comments, only: :create
+    resources :comments, only: [:create, :edit, :update, :destroy]
   end
 
   # Root page

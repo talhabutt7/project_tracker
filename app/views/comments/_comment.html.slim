@@ -1,5 +1,17 @@
-div id=dom_id(comment) class="mb-4 p-3 bg-white rounded shadow"
-  p
-    span class="font-semibold"= comment.user.email
-    span class="text-sm text-gray-600 ml-2"= comment.created_at.strftime("%Y-%m-%d %H:%M")
-  p= comment.body
+= turbo_frame_tag dom_id(comment) do
+  - if current_user == comment.user && defined?(editing_comment) && editing_comment == comment
+    = render "comments/edit_form", project: comment.project, comment: comment
+  - else
+    div class="mb-4 p-3 rounded shadow flex justify-between items-start"
+      div
+        p.text-sm.font-semibold= comment.user.email
+        - if comment.updated_at != comment.created_at
+          span.text-sm.italic edited
+        p.text-xs.text-gray-400.mt-2.whitespace-pre-wrap= comment.body
+        p.text-sm.text-gray-100= comment.created_at.strftime("%b %d, %Y %H:%M")
+
+
+      - if current_user == comment.user
+        div.flex.flex-col.gap-1.ml-4
+          = link_to "✏️", edit_project_comment_path(comment.project, comment), data: { turbo_frame: dom_id(comment) }, class: "text-sm text-gray-400 hover:text-white"
+          = link_to "🗑️", project_comment_path(comment.project, comment), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-sm text-red-400 hover:text-red-200"
